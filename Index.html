@@ -1,0 +1,1982 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L A W — Developer Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="description"
+        content="L A W is a student developer portfolio featuring web applications, software projects, creative tools, and ongoing development work.">
+    
+    <meta name="author" content="L A W">
+    
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Social Sharing -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="L A W — Developer Portfolio">
+    <meta property="og:description"
+        content="A student developer portfolio featuring web applications, software projects, and ongoing development work.">
+    <meta property="og:image" content="images/profile.jpg">
+    
+    <!-- X / Twitter Sharing -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="L A W — Developer Portfolio">
+    <meta name="twitter:description"
+        content="A student developer portfolio featuring web applications, software projects, and ongoing development work.">
+    <meta name="twitter:image" content="images/profile.jpg">
+    
+    <!-- Theme -->
+    <meta name="theme-color" content="#111827">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-touch-callout: none;
+        }
+
+        /* Prevent Layout Shifts When Modal Opens */
+        html {
+            scrollbar-gutter: stable;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(156, 163, 175, 0.4) transparent;
+        }
+
+        .dark {
+            scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+        }
+
+        /* Prevent background scroll jump */
+        body.modal-active-body {
+            overflow: hidden !important;
+        }
+
+        /* Hide scrollbars across modal elements */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(156, 163, 175, 0.4);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(156, 163, 175, 0.6);
+        }
+
+        .dark::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .dark::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            transition: background-color 0.4s ease, color 0.4s ease;
+            overflow-x: hidden;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes morphBlob {
+
+            0%,
+            100% {
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            }
+
+            50% {
+                border-radius: 50% 60% 30% 60% / 30% 60% 70% 40%;
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200% 0;
+            }
+
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .animate-scale-in {
+            animation: scaleIn 0.6s ease forwards;
+        }
+
+        .animate-morph {
+            animation: morphBlob 8s ease-in-out infinite;
+        }
+
+        .scroll-hidden {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease;
+        }
+
+        .scroll-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-hidden-left {
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: all 0.8s ease;
+        }
+
+        .scroll-hidden-right {
+            opacity: 0;
+            transform: translateX(40px);
+            transition: all 0.8s ease;
+        }
+
+        .scroll-visible-x {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Tooltip Core Styles */
+        .nav-tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            margin-bottom: 8px;
+            white-space: nowrap;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .nav-item:hover .nav-tooltip {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        .nav-tooltip.mobile-active {
+            opacity: 1 !important;
+            transform: translateX(-50%) translateY(0) !important;
+        }
+
+        .glass {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        /* Glass Nav Action Button Styles */
+        .modal-action-btn {
+            border: 1px solid rgba(229, 231, 235, 1);
+            background-color: rgba(249, 250, 251, 1);
+            color: #111827;
+            transition: all 0.25s ease;
+        }
+
+        .dark .modal-action-btn {
+            border: 1px solid rgba(55, 65, 81, 1);
+            background-color: rgba(17, 24, 39, 1);
+            color: #f9fafb;
+        }
+
+        .modal-action-btn:hover:not(.btn-disabled) {
+            background-color: #111827 !important;
+            color: #ffffff !important;
+            border-color: #111827 !important;
+        }
+
+        .dark .modal-action-btn:hover:not(.btn-disabled) {
+            background-color: #ffffff !important;
+            color: #000000 !important;
+            border-color: #ffffff !important;
+        }
+
+        .btn-disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+            background-color: rgba(229, 231, 235, 0.5);
+            border-color: rgba(209, 213, 219, 0.8);
+            color: #6b7280;
+        }
+
+        .dark .btn-disabled {
+            background-color: rgba(31, 41, 55, 0.5);
+            border-color: rgba(55, 65, 81, 0.8);
+            color: #9ca3af;
+        }
+
+        .project-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #888, #fff, #888);
+            background-size: 200% auto;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s linear infinite;
+        }
+
+        .light .gradient-text {
+            background: linear-gradient(90deg, #111, #666, #111);
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-active {
+            color: #000 !important;
+        }
+
+        .dark .nav-active {
+            color: #fff !important;
+        }
+
+        .nav-active::after {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            background: currentColor;
+            border-radius: 50%;
+        }
+
+        .skill-btn {
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .skill-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .skill-btn.active .skill-box {
+            border-color: #111827;
+            background-color: #111827;
+            color: #ffffff;
+        }
+
+        .dark .skill-btn.active .skill-box {
+            border-color: #ffffff;
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        .skill-btn.active i {
+            color: inherit !important;
+        }
+
+        .tech-tag {
+            transition: all 0.2s ease;
+        }
+
+        .tech-tag:hover {
+            transform: scale(1.05);
+        }
+
+        /* Bordered Circle Pagination Styles */
+        .dot-circle {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            border: 1px solid rgba(156, 163, 175, 0.8);
+            background-color: transparent;
+            transition: all 0.25s ease;
+        }
+
+        .dark .dot-circle {
+            border: 1px solid rgba(156, 163, 175, 0.6);
+        }
+
+        .dot-circle.active {
+            background-color: #111827 !important;
+            border-color: #111827 !important;
+            transform: scale(1.15);
+        }
+
+        .dark .dot-circle.active {
+            background-color: #ffffff !important;
+            border-color: #ffffff !important;
+        }
+
+        /* Smooth Modal GPU-Accelerated Transition Fix */
+        #projectModal {
+            transition: opacity 0.25s ease, visibility 0.25s ease;
+            will-change: opacity, visibility;
+        }
+
+        #modalContainer {
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity;
+            backface-visibility: hidden;
+        }
+
+        #projectModal.modal-open {
+            opacity: 1 !important;
+            pointer-events: auto !important;
+            visibility: visible !important;
+        }
+
+        #projectModal.modal-open #modalContainer {
+            opacity: 1 !important;
+            transform: scale(1) translateY(0) !important;
+        }
+
+        #projectModal.modal-closed {
+            opacity: 0 !important;
+            pointer-events: none !important;
+            visibility: hidden !important;
+        }
+
+        #projectModal.modal-closed #modalContainer {
+            opacity: 0 !important;
+            transform: scale(0.96) translateY(8px) !important;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-950 dark:text-gray-200 font-sans select-none">
+
+    <!-- ==================== HERO SECTION ==================== -->
+    <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <div
+            class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gray-200/50 via-transparent to-transparent dark:from-white/5">
+        </div>
+
+        <div
+            class="absolute top-1/4 -left-32 w-64 h-64 bg-white/10 dark:bg-white/5 rounded-full blur-3xl animate-morph">
+        </div>
+        <div class="absolute bottom-1/4 -right-32 w-80 h-80 bg-gray-300/10 dark:bg-white/5 rounded-full blur-3xl animate-morph"
+            style="animation-delay: -4s;"></div>
+
+        <div class="relative z-10 text-center px-6 max-w-4xl mx-auto">
+            <div class="mb-8 opacity-0 animate-scale-in" style="animation-delay: 0.2s; animation-fill-mode: forwards;">
+                <div class="relative inline-block">
+                    <div
+                        class="w-28 h-28 md:w-32 md:h-32 rounded-full overflow-hidden mx-auto ring-2 ring-gray-300 dark:ring-white/20 shadow-xl">
+                        <img src="images/profile.jpg" alt="L A W" class="w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
+
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-light tracking-[0.3em] md:tracking-[0.5em] mb-4 opacity-0 animate-fade-in-up"
+                style="animation-delay: 0.4s; animation-fill-mode: forwards;">
+                <span class="gradient-text">L A W</span>
+            </h1>
+
+            <p class="text-lg md:text-xl font-light text-gray-500 dark:text-gray-400 tracking-widest uppercase mb-10 opacity-0 animate-fade-in-up"
+                style="animation-delay: 0.6s; animation-fill-mode: forwards;">
+                Student Developer
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 opacity-0 animate-fade-in-up"
+                style="animation-delay: 0.8s; animation-fill-mode: forwards;">
+                <a href="#portfolio"
+                    class="px-8 py-3 bg-gray-900 dark:bg-white text-white dark:text-black rounded-full font-medium text-sm tracking-wide transition-all duration-300 hover:opacity-80 hover:-translate-y-0.5">
+                    View My Work
+                </a>
+                <a href="#contact"
+                    class="px-8 py-3 border border-gray-300 dark:border-gray-700 text-gray-600 dark:text-gray-300 rounded-full font-medium text-sm tracking-wide transition-all duration-300 hover:bg-gray-100 dark:hover:bg-white/10">
+                    Get In Touch
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== ABOUT SECTION ==================== -->
+    <section id="about" class="py-16 md:py-20 px-6">
+        <div class="max-w-4xl mx-auto">
+            <div class="scroll-hidden">
+                <span class="text-gray-400 text-xs tracking-[0.3em] uppercase font-medium">About</span>
+                <h2 class="text-3xl md:text-4xl font-light mt-3 mb-6 text-gray-800 dark:text-gray-100">
+                    Learning <span class="font-medium">By Building</span>
+                </h2>
+                <div class="space-y-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed max-w-2xl">
+                    <p>I’m a Computer Science student learning through hands-on projects and experimentation. I enjoy
+                        building websites,
+                        applications, and other software projects that help me understand how things work.</p>
+
+                    <p>I also take on small freelance and project-based development work, giving me opportunities to
+                        apply what I learn
+                        to real-world requirements and different types of projects.</p>
+
+                    <p>I try to keep my work simple, functional, and easy to understand. This portfolio is a collection
+                        of projects I’ve
+                        built while learning and developing my skills.</p>
+                </div>
+
+                <!-- Stats -->
+                <div class="grid grid-cols-3 gap-6 mt-8 max-w-md">
+                    <div>
+                        <div class="text-2xl font-light text-gray-800 dark:text-white counter" data-target="2">0</div>
+                        <div class="text-[0.6rem] text-gray-400 uppercase tracking-widest mt-1">Years Exp.</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-light text-gray-800 dark:text-white counter" data-target="50">0</div>
+                        <div class="text-[0.6rem] text-gray-400 uppercase tracking-widest mt-1">Projects</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-light text-gray-800 dark:text-white counter" data-target="26">0</div>
+                        <div class="text-[0.6rem] text-gray-400 uppercase tracking-widest mt-1">Clients</div>
+                    </div>
+                </div>
+
+                <!-- Interactive Skills & Knowledge Viewer -->
+                <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-400 text-[0.6rem] tracking-[0.2em] uppercase font-medium">Skills &
+                            Tools</span>
+                        <span class="text-[0.6rem] text-gray-400 italic">Click a skill to view details</span>
+                    </div>
+
+                    <!-- Skill Buttons Row -->
+                    <div class="flex flex-wrap gap-3 mt-4" id="skillGrid">
+                        <!-- HTML5 -->
+                        <button class="skill-btn flex flex-col items-center gap-1.5 cursor-pointer group"
+                            data-skill="html">
+                            <div
+                                class="skill-box w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-800 border border-transparent dark:border-gray-700/50 flex items-center justify-center transition-all">
+                                <i class="lni lni-html5 text-sm text-gray-600 dark:text-gray-300"></i>
+                            </div>
+                            <span class="text-[0.6rem] text-gray-500 dark:text-gray-400">HTML</span>
+                        </button>
+
+                        <!-- CSS3 -->
+                        <button class="skill-btn flex flex-col items-center gap-1.5 cursor-pointer group"
+                            data-skill="css">
+                            <div
+                                class="skill-box w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-800 border border-transparent dark:border-gray-700/50 flex items-center justify-center transition-all">
+                                <i class="lni lni-css3 text-sm text-gray-600 dark:text-gray-300"></i>
+                            </div>
+                            <span class="text-[0.6rem] text-gray-500 dark:text-gray-400">CSS</span>
+                        </button>
+
+                        <!-- JavaScript -->
+                        <button class="skill-btn flex flex-col items-center gap-1.5 cursor-pointer group"
+                            data-skill="js">
+                            <div
+                                class="skill-box w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-800 border border-transparent dark:border-gray-700/50 flex items-center justify-center transition-all">
+                                <i class="lni lni-javascript text-sm text-gray-600 dark:text-gray-300"></i>
+                            </div>
+                            <span class="text-[0.6rem] text-gray-500 dark:text-gray-400">JavaScript</span>
+                        </button>
+
+                        <!-- React -->
+                        <button class="skill-btn flex flex-col items-center gap-1.5 cursor-pointer group"
+                            data-skill="react">
+                            <div
+                                class="skill-box w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-800 border border-transparent dark:border-gray-700/50 flex items-center justify-center transition-all">
+                                <i class="lni lni-react text-sm text-gray-600 dark:text-gray-300"></i>
+                            </div>
+                            <span class="text-[0.6rem] text-gray-500 dark:text-gray-400">React</span>
+                        </button>
+
+                        <!-- Node.js -->
+                        <button class="skill-btn flex flex-col items-center gap-1.5 cursor-pointer group"
+                            data-skill="node">
+                            <div
+                                class="skill-box w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-800 border border-transparent dark:border-gray-700/50 flex items-center justify-center transition-all">
+                                <i class="lni lni-nodejs text-sm text-gray-600 dark:text-gray-300"></i>
+                            </div>
+                            <span class="text-[0.6rem] text-gray-500 dark:text-gray-400">Node.js</span>
+                        </button>
+
+                        <!-- Python / AI -->
+                        <button class="skill-btn flex flex-col items-center gap-1.5 cursor-pointer group"
+                            data-skill="python">
+                            <div
+                                class="skill-box w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-800 border border-transparent dark:border-gray-700/50 flex items-center justify-center transition-all">
+                                <i class="lni lni-python text-sm text-gray-600 dark:text-gray-300"></i>
+                            </div>
+                            <span class="text-[0.6rem] text-gray-500 dark:text-gray-400">Python</span>
+                        </button>
+
+                        <!-- C# / Game Dev -->
+                        <button class="skill-btn flex flex-col items-center gap-1.5 cursor-pointer group"
+                            data-skill="csharp">
+                            <div
+                                class="skill-box w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-800 border border-transparent dark:border-gray-700/50 flex items-center justify-center transition-all">
+                                <i class="lni lni-code text-sm text-gray-600 dark:text-gray-300"></i>
+                            </div>
+                            <span class="text-[0.6rem] text-gray-500 dark:text-gray-400">C#</span>
+                        </button>
+
+                        <!-- MySQL -->
+                        <button class="skill-btn flex flex-col items-center gap-1.5 cursor-pointer group"
+                            data-skill="mysql">
+                            <div
+                                class="skill-box w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-800 border border-transparent dark:border-gray-700/50 flex items-center justify-center transition-all">
+                                <i class="lni lni-database text-sm text-gray-600 dark:text-gray-300"></i>
+                            </div>
+                            <span class="text-[0.6rem] text-gray-500 dark:text-gray-400">MySQL</span>
+                        </button>
+
+                        <!-- Figma / Design -->
+                        <button class="skill-btn flex flex-col items-center gap-1.5 cursor-pointer group"
+                            data-skill="figma">
+                            <div
+                                class="skill-box w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-800 border border-transparent dark:border-gray-700/50 flex items-center justify-center transition-all">
+                                <i class="lni lni-figma text-sm text-gray-600 dark:text-gray-300"></i>
+                            </div>
+                            <span class="text-[0.6rem] text-gray-500 dark:text-gray-400">Figma</span>
+                        </button>
+                    </div>
+
+                    <!-- Dynamic Interactive Knowledge Drawer Container -->
+                    <div id="skillDetailsDrawer"
+                        class="hidden mt-4 p-4 rounded-xl bg-gray-100/80 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 transition-all duration-300 opacity-0 translate-y-2 relative">
+                        <button id="closeSkillDrawer"
+                            class="absolute top-3 right-3 text-gray-400 hover:text-black dark:hover:text-white transition-colors text-xs">
+                            <i class="lni lni-close"></i>
+                        </button>
+
+                        <div class="flex items-center gap-3 mb-3">
+                            <div id="drawerIconBox"
+                                class="w-8 h-8 rounded-lg bg-black dark:bg-white text-white dark:text-black flex items-center justify-center text-sm font-bold">
+                                <i id="drawerIcon" class="lni lni-code"></i>
+                            </div>
+                            <div>
+                                <h4 id="drawerTitle" class="text-sm font-semibold text-gray-900 dark:text-white">Skill
+                                    Name</h4>
+                                <span id="drawerCategory"
+                                    class="text-[0.55rem] uppercase tracking-wider text-gray-400 font-medium">Category</span>
+                            </div>
+                        </div>
+
+                        <p id="drawerDesc" class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed mb-3">
+                            Skill description text goes here.
+                        </p>
+
+                        <div>
+                            <h5 class="text-[0.6rem] uppercase tracking-wider font-semibold text-gray-400 mb-1.5">Key
+                                Expertise & Knowledge</h5>
+                            <ul id="drawerFeatures"
+                                class="grid sm:grid-cols-2 gap-1.5 text-xs text-gray-700 dark:text-gray-200">
+                                <!-- Dynamic bullet items -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Education -->
+                <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">
+                    <span class="text-gray-400 text-[0.6rem] tracking-[0.2em] uppercase font-medium">Education</span>
+                    <div class="space-y-3 mt-4">
+                        <!-- College: EARIST Cavite -->
+                        <div class="flex items-center gap-4 py-2">
+                            <div
+                                class="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+                                <img src="images/Earist.png" alt="Paluan National High School"
+                                    class="w-full h-full object-cover">
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <h4 class="text-sm font-medium text-gray-800 dark:text-white truncate">Earist Cavite
+                                </h4>
+                                <p class="text-[0.65rem] text-gray-400 mt-0.5">Bachelor of Science in Computer Science
+                                </p>
+                            </div>
+                            <div class="text-right flex-shrink-0">
+                                <span class="text-xs font-medium text-gray-600 dark:text-gray-300">2027</span>
+                                <p class="text-[0.55rem] text-gray-400 uppercase tracking-wider mt-0.5">Expected</p>
+                            </div>
+                        </div>
+
+                        <!-- SHS: Paluan National High School (GAS) -->
+                        <div class="flex items-center gap-4 py-2">
+                            <div
+                                class="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100 dark:bg-gray-800">
+                                <img src="images/pnhs.png" alt="Paluan National High School"
+                                    class="w-full h-full object-cover">
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <h4 class="text-sm font-medium text-gray-800 dark:text-white truncate">Paluan National
+                                    High School</h4>
+                                <p class="text-[0.65rem] text-gray-400 mt-0.5">GAS Track — Senior High School</p>
+                            </div>
+                            <div class="text-right flex-shrink-0">
+                                <span class="text-xs font-medium text-gray-600 dark:text-gray-300">2023</span>
+                                <p class="text-[0.55rem] text-gray-400 uppercase tracking-wider mt-0.5">Graduated</p>
+                            </div>
+                        </div>
+
+                        <!-- JHS: Paluan National High School -->
+                        <div class="flex items-center gap-4 py-2">
+                            <div
+                                class="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100 dark:bg-gray-800">
+                                <img src="images/pnhs.png" alt="Paluan National High School"
+                                    class="w-full h-full object-cover">
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <h4 class="text-sm font-medium text-gray-800 dark:text-white truncate">Paluan National
+                                    High School</h4>
+                                <p class="text-[0.65rem] text-gray-400 mt-0.5">Junior High School</p>
+                            </div>
+                            <div class="text-right flex-shrink-0">
+                                <span class="text-xs font-medium text-gray-600 dark:text-gray-300">2021</span>
+                                <p class="text-[0.55rem] text-gray-400 uppercase tracking-wider mt-0.5">Graduated</p>
+                            </div>
+                        </div>
+
+                        <!-- Elementary: Paluan, Lumang bayan elementary school -->
+                        <div class="flex items-center gap-4 py-2">
+                            <div
+                                class="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100 dark:bg-gray-800">
+                                <img src="images/Elem.png" alt="Paluan, Lumang bayan elementary school"
+                                    class="w-full h-full object-cover">
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <h4 class="text-sm font-medium text-gray-800 dark:text-white truncate">Paluan, Lumang
+                                    Bayan Elementary School</h4>
+                                <p class="text-[0.65rem] text-gray-400 mt-0.5">Elementary Education</p>
+                            </div>
+                            <div class="text-right flex-shrink-0">
+                                <span class="text-xs font-medium text-gray-600 dark:text-gray-300">2016</span>
+                                <p class="text-[0.55rem] text-gray-400 uppercase tracking-wider mt-0.5">Graduated</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== PORTFOLIO SECTION ==================== -->
+    <section id="portfolio" class="py-16 md:py-20 px-6 bg-gray-100/50 dark:bg-gray-900/50">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-10 scroll-hidden">
+                <span class="text-gray-400 text-xs tracking-[0.3em] uppercase font-medium">Portfolio</span>
+                <h2 class="text-3xl md:text-4xl font-light mt-3 text-gray-800 dark:text-gray-100">Selected <span
+                        class="font-medium">Works</span></h2>
+            </div>
+
+            <!-- RESPONSIVE CARD STACK: 1 column on mobile, 3 columns on medium+ screens -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="projectGrid">
+                <!-- Project Card 1 (Live - Created Entirely by You) -->
+                <div id="project-1" data-title="PULSE Fitness" data-tag="Fitness" data-status-type="live"
+                    data-status-label="Live" data-available="true" data-img="images/project1.png"
+                    data-description="A fitness web application built as a personal project for creating and managing workout routines. It includes customizable exercises, workout timers, rest periods, and local workout data storage."
+                    data-problem="I wanted to create a simple fitness application where users could organize and follow their workout routines continuously. Structured exercise and rest timers help maintain a consistent workout flow, while customizable rest periods allow users to adjust the routine to their own needs."
+                    data-features="Solo Development, Customizable Workout Routines, Workout & Rest Timers, Exercise Guide Library, LocalStorage Data Persistence"
+                    data-stack="Vue 3, JavaScript, Vite, Tailwind CSS, LocalStorage" data-role="Developer & UI Designer"
+                    data-github="https://github.com/walterdelara" data-live="https://pulselaw.vercel.app/"
+                    data-casestudy=""
+                    class="project-card group relative rounded-lg overflow-hidden block bg-white dark:bg-gray-800 shadow-sm hover:shadow-lg scroll-hidden cursor-pointer">
+
+                    <div
+                        class="relative aspect-[16/10] bg-gray-950 p-1 flex items-center justify-center overflow-hidden">
+
+                        <img src="images/project1.png" alt="PULSE Fitness web application"
+                            class="w-full h-full object-contain object-center rounded scale-[1.05] transition-transform duration-500 group-hover:scale-[1.12]">
+
+                        <div
+                            class="absolute top-3 right-3 w-6 h-6 bg-white/90 dark:bg-black/90 rounded-full flex items-center justify-center text-black dark:text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 shadow-md">
+
+                            <i class="lni lni-eye text-[0.6rem]"></i>
+
+                        </div>
+                    </div>
+
+                    <div class="p-3">
+
+                        <span class="text-gray-400 text-[0.5rem] tracking-widest uppercase font-medium">
+                            Fitness
+                        </span>
+
+                        <h3 class="text-gray-800 dark:text-white text-sm font-medium mt-0.5 line-clamp-1">
+                            PULSE Fitness
+                        </h3>
+
+                        <p class="text-gray-400 dark:text-gray-500 text-[0.65rem] mt-1 line-clamp-2 leading-relaxed">
+                            A fitness web application for creating workout routines, managing timers, and keeping
+                            workout data
+                            organized.
+                        </p>
+
+                        <div class="flex flex-wrap gap-1 mt-2">
+
+                            <span
+                                class="tech-tag px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 text-[0.5rem] rounded">
+                                Vue 3
+                            </span>
+
+                            <span
+                                class="tech-tag px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 text-[0.5rem] rounded">
+                                JavaScript
+                            </span>
+
+                            <span
+                                class="tech-tag px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 text-[0.5rem] rounded">
+                                Vite
+                            </span>
+
+                            <span
+                                class="tech-tag px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 text-[0.5rem] rounded">
+                                Tailwind CSS
+                            </span>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 2 (Planned Project) -->
+                <div id="project-2" data-title="Rexel" data-tag="Creative Tools" data-status-type="dev"
+                    data-status-label="In Development" data-available="true" data-img="images/project2.png"
+                    data-description="A browser-based pixel art and sprite animation workspace for creating, organizing, editing, and preparing game-ready 2D assets."
+                    data-problem="Rexel provides a focused browser-based environment for creating and managing pixel art without requiring a separate desktop application. It combines pixel editing, layer management, custom palettes, animation tools, grid controls, sprite-sheet workflows, and local project storage into a single workspace. The editor is designed to support both individual pixel artwork and structured game asset workflows, from drawing and animation to export and organization."
+                    data-features="Pixel Art Editor, Layers & Selection, Custom Palettes, Pixel & Tile Grids, Animation Timeline, Onion Skinning, Tiled Preview, Sprite Sheet Export, Frame Management, Asset Organization, Project Management, PNG Import & Export, IndexedDB Project Storage"
+                    data-stack="Vue 3, JavaScript, Vite, Tailwind CSS, HTML Canvas, Web Workers, OffscreenCanvas, IndexedDB"
+                    data-role="Frontend Developer & Tool Designer" data-github="" data-live="" data-casestudy=""
+                    class="project-card group relative rounded-lg overflow-hidden block bg-white dark:bg-gray-800 shadow-sm hover:shadow-lg scroll-hidden cursor-pointer">
+                
+                    <div class="relative aspect-[16/10] bg-gray-950 p-1 flex items-center justify-center overflow-hidden">
+                        <img src="images/project2.png" alt="Rexel"
+                            class="w-full h-full object-contain object-center rounded scale-[1.05] transition-transform duration-500 group-hover:scale-[1.12]">
+                
+                        <div
+                            class="absolute top-2 right-2 w-6 h-6 bg-white/90 dark:bg-black/90 rounded-full flex items-center justify-center text-black dark:text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <i class="lni lni-eye text-[0.6rem]"></i>
+                        </div>
+                    </div>
+                
+                    <div class="p-3">
+                        <span class="text-gray-400 text-[0.5rem] tracking-widest uppercase font-medium">
+                            Creative Tools
+                        </span>
+                
+                        <h3 class="text-gray-800 dark:text-white text-sm font-medium mt-0.5 line-clamp-1">
+                            Rexel
+                        </h3>
+                
+                        <p class="text-gray-400 dark:text-gray-500 text-[0.65rem] mt-1 line-clamp-2 leading-relaxed">
+                            Browser-based workspace for creating pixel art, sprite animations, and game-ready assets.
+                        </p>
+                
+                        <div class="flex flex-wrap gap-1 mt-2">
+                            <span
+                                class="tech-tag px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 text-[0.5rem] rounded">
+                                Vue 3
+                            </span>
+                
+                            <span
+                                class="tech-tag px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 text-[0.5rem] rounded">
+                                Canvas
+                            </span>
+                
+                            <span
+                                class="tech-tag px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 text-[0.5rem] rounded">
+                                Web Workers
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 3 (In Development - Thesis Project) -->
+                <div id="project-3" data-title="The Bible: Beyond the Pages" data-tag="Game Development" data-status-type="dev"
+                    data-status-label="In Development" data-available="false" data-img="images/project3.png"
+                    data-description="A mobile 2D interactive biblical storytelling game designed to present selected Bible stories through illustrated scenes, narration, and interactive activities."
+                    data-problem="Traditional text-based Bible stories can be difficult for some younger audiences to engage with, so this project explores a more interactive way of presenting biblical stories while keeping the content easy to follow."
+                    data-features="Interactive Biblical Stories, Illustrated 2D Scenes, Narrated Storytelling, Story-Based Activities, Chapter Progression"
+                    data-stack="Unity, C#, 2D Game Development" data-role="Game Developer & UI Designer (Thesis Project)" data-github=""
+                    data-live="" data-casestudy=""
+                    class="project-card group relative rounded-lg overflow-hidden block bg-white dark:bg-gray-800 shadow-sm hover:shadow-lg scroll-hidden cursor-pointer">
+                
+                    <div class="relative aspect-[16/10] bg-gray-950 p-1 flex items-center justify-center overflow-hidden">
+                        <img src="images/project3.png" alt="The Bible: Beyond the Pages"
+                            class="w-full h-full object-contain object-center rounded scale-[1.05] transition-transform duration-500 group-hover:scale-[1.12]">
+                
+                        <div
+                            class="absolute top-2 right-2 w-6 h-6 bg-white/90 dark:bg-black/90 rounded-full flex items-center justify-center text-black dark:text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <i class="lni lni-eye text-[0.6rem]"></i>
+                        </div>
+                    </div>
+                
+                    <div class="p-3">
+                        <span class="text-gray-400 text-[0.5rem] tracking-widest uppercase font-medium">
+                            Game Development
+                        </span>
+                
+                        <h3 class="text-gray-800 dark:text-white text-sm font-medium mt-0.5 line-clamp-1">
+                            The Bible: Beyond the Pages
+                        </h3>
+                
+                        <p class="text-gray-400 dark:text-gray-500 text-[0.65rem] mt-1 line-clamp-2 leading-relaxed">
+                            A mobile 2D interactive biblical storytelling game developed as a thesis project.
+                        </p>
+                
+                        <div class="flex flex-wrap gap-1 mt-2">
+                            <span
+                                class="tech-tag px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 text-[0.5rem] rounded">
+                                Unity
+                            </span>
+                
+                            <span
+                                class="tech-tag px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 text-[0.5rem] rounded">
+                                C#
+                            </span>
+                
+                            <span
+                                class="tech-tag px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 text-[0.5rem] rounded">
+                                2D
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== TESTIMONIALS SECTION ==================== -->
+    <section id="testimonials" class="py-16 md:py-20 px-6">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-10 scroll-hidden">
+                <span class="text-gray-400 text-xs tracking-[0.3em] uppercase font-medium">Testimonials</span>
+                <h2 class="text-3xl md:text-4xl font-light mt-3 text-gray-800 dark:text-gray-100">Client <span
+                        class="font-medium">Words</span></h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-5">
+                <div
+                    class="scroll-hidden bg-white dark:bg-gray-900 rounded-xl p-5 border border-gray-100 dark:border-gray-800 hover:border-gray-300 dark:hover:border-white/20 transition-all hover:-translate-y-1">
+                    <div class="flex items-center gap-3 mb-3">
+                        <img src="images/c1.png" class="w-9 h-9 rounded-full object-cover" alt="Client">
+                        <div>
+                            <h4 class="text-sm font-medium dark:text-white">Naomi M.</h4>
+                            <p class="text-[0.55rem] text-gray-400 uppercase tracking-widest">Student Client</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-500 dark:text-gray-400 text-xs leading-relaxed">"Walter really helped us a lot with our system. We had the basic idea already, but he helped us turn it into something that
+                    actually worked. He also helped with the features and fixed things whenever we ran into problems. Having his help made
+                    the whole project easier for us and helped us get everything finished."</p>
+                </div>
+                <div
+                    class="scroll-hidden bg-white dark:bg-gray-900 rounded-xl p-5 border border-gray-100 dark:border-gray-800 hover:border-gray-300 dark:hover:border-white/20 transition-all hover:-translate-y-1">
+                    <div class="flex items-center gap-3 mb-3">
+                        <img src="images/c2.jpg" class="w-9 h-9 rounded-full object-cover" alt="Client">
+                        <div>
+                            <h4 class="text-sm font-medium dark:text-white">Angelo G.</h4>
+                            <p class="text-[0.55rem] text-gray-400 uppercase tracking-widest">Faculty Client</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-500 dark:text-gray-400 text-xs leading-relaxed">"He did a really good job with my portfolio. I gave him the information and materials I wanted to include, and he was
+                    able to organize everything into a clean and presentable website. I also liked that he paid attention to the small
+                    details and made sure the final result matched what I had in mind. I’m very happy with how it turned out."</p>
+                </div>
+                <div
+                    class="scroll-hidden bg-white dark:bg-gray-900 rounded-xl p-5 border border-gray-100 dark:border-gray-800 hover:border-gray-300 dark:hover:border-white/20 transition-all hover:-translate-y-1">
+                    <div class="flex items-center gap-3 mb-3">
+                        <img src="images/c3.jpg" class="w-9 h-9 rounded-full object-cover" alt="Client">
+                        <div>
+                            <h4 class="text-sm font-medium dark:text-white">Susenna</h4>
+                            <p class="text-[0.55rem] text-gray-400 uppercase tracking-widest">PULSE Fitness User</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-500 dark:text-gray-400 text-xs leading-relaxed">"I’ve really enjoyed using PULSE Fitness so far. I like how simple it is to create my own workouts and keep track of my
+                    sets and reps. There’s still a lot of room for the website to grow, but I already find the main features really useful.
+                    He did a great job putting the idea together, and I’d definitely recommend him if you’re looking for someone to build
+                    something for you."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== CONTACT SECTION ==================== -->
+    <section id="contact" class="py-16 md:py-20 px-6 bg-gray-100/50 dark:bg-gray-900/50">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-10 scroll-hidden">
+                <span class="text-gray-400 text-xs tracking-[0.3em] uppercase font-medium">Contact</span>
+                <h2 class="text-3xl md:text-4xl font-light mt-3 text-gray-800 dark:text-gray-100">Let's <span
+                        class="font-medium">Connect</span></h2>
+            </div>
+            <div class="grid md:grid-cols-5 gap-10">
+                <div class="md:col-span-2 scroll-hidden-left">
+                    <div class="space-y-5">
+                        <div class="flex items-start gap-3">
+                            <div
+                                class="w-9 h-9 rounded-lg bg-white dark:bg-white/5 flex items-center justify-center flex-shrink-0">
+                                <i class="lni lni-envelope text-gray-600 dark:text-white text-sm"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-medium dark:text-white mb-0.5">Email</h4>
+                                <a href="mailto:walterjakedelara18@gmail.com"
+                                    class="text-xs text-gray-400 hover:text-black dark:hover:text-white transition-colors">Walterjakedelara18@gmail.com</a>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div
+                                class="w-9 h-9 rounded-lg bg-white dark:bg-white/5 flex items-center justify-center flex-shrink-0">
+                                <i class="lni lni-map-marker text-gray-600 dark:text-white text-sm"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-medium dark:text-white mb-0.5">Location</h4>
+                                <p class="text-xs text-gray-400">San Pedro Laguna, Philippines</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-8">
+                        <div class="flex gap-2">
+                            <a href="https://www.tiktok.com/@sin_8083"
+                                class="w-8 h-8 rounded-lg bg-white dark:bg-gray-800 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-300 text-sm">
+                                <i class="lni lni-tiktok"></i>
+                            </a>
+                            <a href="https://www.instagram.com/l.a.wltr/"
+                                class="w-8 h-8 rounded-lg bg-white dark:bg-gray-800 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-300 text-sm">
+                                <i class="lni lni-instagram"></i>
+                            </a>
+                            <a href="https://www.facebook.com/walterjake.delara.54/"
+                                class="w-8 h-8 rounded-lg bg-white dark:bg-gray-800 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-300 text-sm">
+                                <i class="lni lni-facebook-original"></i>
+                            </a>
+                            <a href="https://github.com/walterdelara"
+                                class="w-8 h-8 rounded-lg bg-white dark:bg-gray-800 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-300 text-sm">
+                                <i class="lni lni-github-original"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:col-span-3 scroll-hidden-right">
+                    <form id="contactForm" class="space-y-3">
+                        <!-- Web3Forms Access Key -->
+                        <input type="hidden" name="access_key" value="08feb1a6-f56e-4eb2-aff6-e93830c499aa">
+
+                        <!-- 1. Identifies who the email is "From" in your inbox list -->
+                        <input type="hidden" name="from_name" value="L A W Portfolio Website">
+
+                        <!-- 2. Sets a custom subject line so you know immediately where it came from -->
+                        <input type="hidden" name="subject" value=" New Message from L A W Developer Portfolio">
+
+                        <!-- Your existing form fields -->
+                        <div class="grid sm:grid-cols-2 gap-3">
+                            <input type="text" name="name" required placeholder="Name"
+                                class="w-full px-4 py-2.5 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg text-sm focus:outline-none focus:border-gray-400 dark:focus:border-white transition-all">
+                            <input type="email" name="email" required placeholder="Email"
+                                class="w-full px-4 py-2.5 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg text-sm focus:outline-none focus:border-gray-400 dark:focus:border-white transition-all">
+                        </div>
+
+                        <!-- User's choice of subject (Optional: if included, it will be listed in the email body details) -->
+                        <input type="text" name="message_subject" required placeholder="Subject"
+                            class="w-full px-4 py-2.5 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg text-sm focus:outline-none focus:border-gray-400 dark:focus:border-white transition-all">
+
+                        <textarea name="message" rows="4" required placeholder="Message"
+                            class="w-full px-4 py-2.5 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg text-sm focus:outline-none focus:border-gray-400 dark:focus:border-white resize-none transition-all"></textarea>
+
+                        <button type="submit"
+                            class="w-full sm:w-auto px-6 py-2.5 bg-gray-900 dark:bg-white text-white dark:text-black rounded-lg font-medium text-sm transition-all hover:opacity-80">
+                            Send Message
+                        </button>
+                    </form>
+                    <div id="formSuccess"
+                        class="hidden mt-3 p-3 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-gray-800 rounded-lg">
+                        <p class="text-gray-600 dark:text-gray-300 text-sm">✓ Message sent successfully!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="py-6 px-6 border-t border-gray-200 dark:border-gray-800">
+        <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p class="text-xs text-gray-400">
+                © 2024 <span class="text-gray-600 dark:text-white font-medium">L A W</span>. All rights reserved.
+            </p>
+            <p class="text-xs text-gray-400">Learning by building.</p>
+        </div>
+    </footer>
+
+    <div class="h-20"></div>
+
+    <!-- ==================== FLOATING BOTTOM NAV ==================== -->
+    <nav id="floatingNav"
+        class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 glass bg-white/80 dark:bg-gray-900/80 border border-gray-200/50 dark:border-gray-700/50 rounded-2xl px-2 py-1.5 shadow-xl">
+        <div class="flex items-center gap-0.5">
+            <a href="#hero"
+                class="nav-item relative flex items-center justify-center w-9 h-9 rounded-xl text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-all"
+                data-section="hero">
+                <i class="lni lni-home text-sm"></i>
+                <span class="nav-tooltip bg-black text-white text-[0.6rem]">Home</span>
+            </a>
+            <a href="#about"
+                class="nav-item relative flex items-center justify-center w-9 h-9 rounded-xl text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-all"
+                data-section="about">
+                <i class="lni lni-user text-sm"></i>
+                <span class="nav-tooltip bg-black text-white text-[0.6rem]">About</span>
+            </a>
+            <a href="#portfolio"
+                class="nav-item relative flex items-center justify-center w-9 h-9 rounded-xl text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-all"
+                data-section="portfolio">
+                <i class="lni lni-grid-alt text-sm"></i>
+                <span class="nav-tooltip bg-black text-white text-[0.6rem]">Work</span>
+            </a>
+            <a href="#testimonials"
+                class="nav-item relative flex items-center justify-center w-9 h-9 rounded-xl text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-all"
+                data-section="testimonials">
+                <i class="lni lni-quotation text-sm"></i>
+                <span class="nav-tooltip bg-black text-white text-[0.6rem]">Reviews</span>
+            </a>
+            <a href="#contact"
+                class="nav-item relative flex items-center justify-center w-9 h-9 rounded-xl text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-all"
+                data-section="contact">
+                <i class="lni lni-envelope text-sm"></i>
+                <span class="nav-tooltip bg-black text-white text-[0.6rem]">Contact</span>
+            </a>
+            <div class="w-px h-5 bg-gray-200 dark:bg-gray-700 mx-0.5"></div>
+            <button id="themeToggle"
+                class="nav-item relative flex items-center justify-center w-9 h-9 rounded-xl text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-all">
+                <i class="lni lni-night theme-icon-dark text-sm"></i>
+                <i class="lni lni-sun theme-icon-light hidden text-sm"></i>
+                <span class="nav-tooltip bg-black text-white text-[0.6rem]">Theme</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hover & Long-Press Status Tooltip -->
+    <div id="hoverTooltip"
+        class="fixed z-[90] hidden pointer-events-none bg-black/90 dark:bg-white/90 text-white dark:text-black text-[0.65rem] font-medium px-2.5 py-1 rounded-md shadow-lg flex items-center gap-1.5 transition-opacity duration-200">
+        <span id="tooltipIcon"></span>
+        <span id="tooltipText">Project Unavailable</span>
+    </div>
+
+    <!-- ==================== RESPONSIVE FLEXIBLE MODAL WITH MOBILE SCROLL & DESKTOP AUTO-PAGINATION ==================== -->
+    <div id="projectModal"
+        class="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 bg-black/60 glass modal-closed">
+        <!-- Flexible Layout Container for Mobile Scroll & Fixed Desktop Height -->
+        <div id="modalContainer"
+            class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl max-w-3xl w-full h-auto max-h-[85vh] md:h-[500px] md:max-h-[90vh] my-auto overflow-y-auto md:overflow-hidden shadow-2xl flex flex-col relative">
+
+            <!-- Close Button -->
+            <button id="closeModalBtn"
+                class="absolute top-3 right-3 sm:top-4 sm:right-4 w-8 h-8 rounded-lg bg-black/60 hover:bg-black/80 text-white flex items-center justify-center transition-all z-20 backdrop-blur-md border border-white/10">
+                <i class="lni lni-close text-xs"></i>
+            </button>
+
+            <!-- Modal Content Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-12 md:h-full items-stretch">
+
+                <!-- Left Column: Screenshot & Tech Info -->
+                <div
+                    class="md:col-span-5 bg-gray-100/80 dark:bg-gray-950/80 p-0 border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-800 flex flex-col justify-between md:h-full md:overflow-y-auto">
+                    <div>
+                        <!-- Centered Image Container -->
+                        <div class="p-4 pb-0">
+                            <div
+                                class="relative w-full aspect-[16/10] sm:aspect-[4/3] bg-gray-950 rounded-xl overflow-hidden shadow-sm border border-gray-200/50 dark:border-gray-800 flex items-center justify-center p-1">
+                                <img id="modalImg" src="" alt="Project Screenshot"
+                                    class="w-full h-full object-contain object-center scale-[1.05] sm:scale-[1.08] rounded transition-transform duration-300">
+                                <div
+                                    class="absolute bottom-2.5 left-2.5 bg-black/80 backdrop-blur-md px-2.5 py-1 rounded-md text-[0.6rem] text-gray-200 flex items-center gap-1.5 border border-white/10">
+                                    <span id="modalStatusIcon"></span>
+                                    <span id="modalStatusLabel" class="font-medium">Status</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Role & Stack Container -->
+                        <div class="p-4 sm:p-5 pt-3 sm:pt-4 space-y-3 sm:space-y-4">
+                            <div>
+                                <h5 class="text-[0.6rem] tracking-widest uppercase font-semibold text-gray-400 mb-1">My
+                                    Role</h5>
+                                <p id="modalRole" class="text-xs font-medium text-gray-800 dark:text-gray-200">Developer
+                                </p>
+                            </div>
+
+                            <div>
+                                <h5 class="text-[0.6rem] tracking-widest uppercase font-semibold text-gray-400 mb-2">
+                                    Tech Stack</h5>
+                                <div id="modalStack" class="flex flex-wrap gap-1.5">
+                                    <!-- Dynamic Tech Badges -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Details & Actions (STRICT NON-PUSH FLEX LAYOUT) -->
+                <div
+                    class="md:col-span-7 p-4 sm:p-6 flex flex-col justify-between md:h-full text-left relative overflow-hidden min-h-0">
+
+                    <!-- Content Wrapper -->
+                    <div id="contentWrapper"
+                        class="flex-1 md:overflow-hidden no-scrollbar relative flex flex-col min-h-0">
+                        <div id="modalHeader" class="mb-3 flex-shrink-0">
+                            <span id="modalTag"
+                                class="text-[0.55rem] tracking-widest uppercase font-semibold text-gray-400">CATEGORY</span>
+                            <h3 id="modalTitle"
+                                class="text-xl sm:text-2xl font-light text-gray-900 dark:text-white mt-0.5">Project
+                                Title</h3>
+                        </div>
+
+                        <!-- Dynamic Page Render Target -->
+                        <div id="dynamicPageTarget"
+                            class="flex-1 space-y-4 md:space-y-0 md:overflow-hidden no-scrollbar relative min-h-0">
+                            <!-- Details inserted dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Bottom Navigation Controls & Action Buttons (NEVER PUSHED OFF-SCREEN) -->
+                    <div
+                        class="pt-3 mt-3 md:mt-0 border-t border-gray-100 dark:border-gray-800 space-y-3 flex-shrink-0 bg-white dark:bg-gray-900 z-10">
+
+                        <!-- Auto Dots & Arrows Controls (Shown ONLY on desktop when content overflows) -->
+                        <div id="paginationBar" class="hidden items-center justify-end">
+                            <div class="flex items-center gap-2">
+                                <button id="prevStepBtn"
+                                    class="w-6 h-6 rounded-md bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-white flex items-center justify-center text-[0.65rem] transition-all font-bold">
+                                    <i class="lni lni-chevron-left"></i>
+                                </button>
+
+                                <div id="dotPagination" class="flex items-center gap-1.5 px-1">
+                                    <!-- Bordered Circle Dots -->
+                                </div>
+
+                                <button id="nextStepBtn"
+                                    class="w-6 h-6 rounded-md bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-white flex items-center justify-center text-[0.65rem] transition-all font-bold">
+                                    <i class="lni lni-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                            <a id="btnGithub" href="#" target="_blank"
+                                class="modal-action-btn flex-1 py-2 px-3 rounded-lg text-xs font-medium text-center flex items-center justify-center gap-1.5">
+                                <i class="lni lni-github-original text-sm"></i> GitHub
+                            </a>
+                            <a id="btnLive" href="#" target="_blank"
+                                class="modal-action-btn flex-1 py-2 px-3 rounded-lg text-xs font-medium text-center flex items-center justify-center gap-1.5">
+                                <i class="lni lni-arrow-top-right text-xs"></i> Live Demo
+                            </a>
+                            <a id="btnCaseStudy" href="#" target="_blank"
+                                class="modal-action-btn flex-1 py-2 px-3 rounded-lg text-xs font-medium text-center flex items-center justify-center gap-1.5">
+                                <i class="lni lni-book text-xs"></i> Case Study
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- REFINED TOAST NOTIFICATION -->
+    <div id="actionToast"
+        class="fixed bottom-20 left-1/2 -translate-x-1/2 z-[110] hidden items-center gap-2.5 px-4 py-2.5 rounded-xl bg-gray-900 text-white dark:bg-white dark:text-gray-900 border border-gray-800 dark:border-gray-200 shadow-2xl backdrop-blur-md text-xs font-medium transition-all duration-300 transform translate-y-2 opacity-0">
+        <span id="toastIcon"
+            class="flex items-center justify-center w-5 h-5 rounded-lg text-[0.65rem] shrink-0 bg-emerald-500/20 text-emerald-400 dark:bg-emerald-500/20 dark:text-emerald-600">
+            <i class="lni lni-checkmark"></i>
+        </span>
+        <span id="toastMessage">Message sent successfully!</span>
+    </div>
+    <!-- ==================== SCRIPT ==================== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Theme Manager
+            const themeToggle = document.getElementById('themeToggle');
+            const html = document.documentElement;
+            const iconDark = document.querySelector('.theme-icon-dark');
+            const iconLight = document.querySelector('.theme-icon-light');
+
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                html.classList.add('dark');
+                iconDark.classList.add('hidden');
+                iconLight.classList.remove('hidden');
+            }
+
+            themeToggle.addEventListener('click', () => {
+                const isDark = html.classList.toggle('dark');
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                iconDark.classList.toggle('hidden', isDark);
+                iconLight.classList.toggle('hidden', !isDark);
+            });
+
+            // Skill Detailed Knowledge Database
+            const skillDataMap = {
+                html: {
+                    title: "HTML5",
+                    category: "Frontend Development",
+                    icon: "lni-html5",
+                    desc: "Using HTML to build structured and accessible web pages with a focus on clear organization and maintainable markup.",
+                    features: [
+                        "Semantic HTML Structure",
+                        "Forms & Input Elements",
+                        "Basic Web Accessibility",
+                        "Responsive Page Structure"
+                    ]
+                },
+
+                css: {
+                    title: "CSS3 & Styling",
+                    category: "Frontend Styling",
+                    icon: "lni-css3",
+                    desc: "Using CSS to create clean and responsive interfaces, with experience in Flexbox, CSS Grid, Tailwind CSS, and basic animations.",
+                    features: [
+                        "Flexbox & CSS Grid",
+                        "Tailwind CSS",
+                        "Responsive Layouts",
+                        "CSS Animations & Transitions"
+                    ]
+                },
+
+                js: {
+                    title: "JavaScript",
+                    category: "Programming",
+                    icon: "lni-javascript",
+                    desc: "Using JavaScript to add functionality and interaction to web applications, including DOM manipulation, events, and browser storage.",
+                    features: [
+                        "DOM Manipulation",
+                        "Event Handling",
+                        "Fetch API & Async Operations",
+                        "LocalStorage"
+                    ]
+                },
+
+                react: {
+                    title: "React & Vue",
+                    category: "Frontend Frameworks",
+                    icon: "lni-react",
+                    desc: "Learning and building component-based interfaces with modern frontend frameworks and development tools.",
+                    features: [
+                        "React Components",
+                        "Vue 3 Basics",
+                        "Props & State",
+                        "Vite Development"
+                    ]
+                },
+
+                node: {
+                    title: "Node.js & Express",
+                    category: "Backend Development",
+                    icon: "lni-nodejs",
+                    desc: "Exploring server-side JavaScript and backend development through APIs, routing, and application integration.",
+                    features: [
+                        "Node.js Fundamentals",
+                        "Express Routing",
+                        "REST API Basics",
+                        "Frontend & Backend Integration"
+                    ]
+                },
+
+                python: {
+                    title: "Python & AI / Machine Learning",
+                    category: "AI, ML & Scripting",
+                    icon: "lni-python",
+                    desc: "Using Python for programming, data processing, and exploring AI and machine learning concepts through projects.",
+                    features: [
+                        "Python Programming",
+                        "Scikit-Learn",
+                        "Data Processing",
+                        "AI & API Integration"
+                    ]
+                },
+
+                csharp: {
+                    title: "C# & Game Development",
+                    category: "Game Development",
+                    icon: "lni-code",
+                    desc: "Using C# and Unity to explore 2D game development, gameplay logic, and object-oriented programming.",
+                    features: [
+                        "Unity 2D Development",
+                        "C# Programming",
+                        "Object-Oriented Programming",
+                        "Game Logic & State Management"
+                    ]
+                },
+
+                mysql: {
+                    title: "MySQL & Databases",
+                    category: "Database",
+                    icon: "lni-database",
+                    desc: "Learning relational database concepts and using MySQL to organize, query, and manage application data.",
+                    features: [
+                        "Database Design",
+                        "SQL Queries",
+                        "CRUD Operations",
+                        "Table Relationships"
+                    ]
+                },
+
+                figma: {
+                    title: "Figma & UI/UX Design",
+                    category: "Design & Prototyping",
+                    icon: "lni-figma",
+                    desc: "Using Figma to explore interface design, layouts, wireframes, and prototypes with a focus on simple and usable experiences.",
+                    features: [
+                        "Wireframes & Mockups",
+                        "UI Layout Design",
+                        "Auto Layout",
+                        "Interactive Prototypes"
+                    ]
+                }
+            };
+
+            // Skill Click Interaction Manager
+            const skillButtons = document.querySelectorAll('.skill-btn');
+            const drawer = document.getElementById('skillDetailsDrawer');
+            const closeDrawerBtn = document.getElementById('closeSkillDrawer');
+
+            const drawerIconBox = document.getElementById('drawerIconBox');
+            const drawerIcon = document.getElementById('drawerIcon');
+            const drawerTitle = document.getElementById('drawerTitle');
+            const drawerCategory = document.getElementById('drawerCategory');
+            const drawerDesc = document.getElementById('drawerDesc');
+            const drawerFeatures = document.getElementById('drawerFeatures');
+
+            let activeSkillKey = null;
+
+            skillButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const skillKey = btn.dataset.skill;
+                    const data = skillDataMap[skillKey];
+
+                    if (!data) return;
+
+                    if (activeSkillKey === skillKey) {
+                        closeSkillViewer();
+                        return;
+                    }
+
+                    activeSkillKey = skillKey;
+
+                    skillButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    drawerIcon.className = `lni ${data.icon}`;
+                    drawerTitle.textContent = data.title;
+                    drawerCategory.textContent = data.category;
+                    drawerDesc.textContent = data.desc;
+
+                    drawerFeatures.innerHTML = '';
+                    data.features.forEach(feat => {
+                        const li = document.createElement('li');
+                        li.className = 'flex items-center gap-1.5';
+                        li.innerHTML = `<i class="lni lni-checkmark text-[0.6rem] text-emerald-500"></i> <span>${feat}</span>`;
+                        drawerFeatures.appendChild(li);
+                    });
+
+                    drawer.classList.remove('hidden');
+                    requestAnimationFrame(() => {
+                        drawer.classList.remove('opacity-0', 'translate-y-2');
+                    });
+                });
+            });
+
+            function closeSkillViewer() {
+                activeSkillKey = null;
+                skillButtons.forEach(b => b.classList.remove('active'));
+                drawer.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => {
+                    drawer.classList.add('hidden');
+                }, 300);
+            }
+
+            closeDrawerBtn.addEventListener('click', closeSkillViewer);
+
+            // Status Config Mapping
+            const statusConfig = {
+                live: {
+                    icon: '<i class="lni lni-checkmark-circle text-emerald-500 text-xs"></i>',
+                    defaultText: 'Live'
+                },
+                dev: {
+                    icon: '<i class="lni lni-cogs text-amber-500 text-xs"></i>',
+                    defaultText: 'In Development'
+                },
+                archived: {
+                    icon: '<i class="lni lni-archive text-gray-400 text-xs"></i>',
+                    defaultText: 'Archived'
+                },
+                private: {
+                    icon: '<i class="lni lni-lock text-rose-500 text-xs"></i>',
+                    defaultText: 'Private'
+                },
+                soon: {
+                    icon: '<i class="lni lni-time text-sky-400 text-xs"></i>',
+                    defaultText: 'Coming Soon'
+                }
+            };
+
+            // Mobile & Desktop Tooltip Controller for ALL Projects (Active & Inactive)
+            const hoverTooltip = document.getElementById('hoverTooltip');
+            const tooltipIcon = document.getElementById('tooltipIcon');
+            const tooltipText = document.getElementById('tooltipText');
+
+            let touchTimer = null;
+            let isLongPressing = false;
+
+            document.querySelectorAll('.nav-item').forEach(navItem => {
+                const tooltip = navItem.querySelector('.nav-tooltip');
+                if (!tooltip) return;
+
+                navItem.addEventListener('touchstart', (e) => {
+                    isLongPressing = false;
+                    touchTimer = setTimeout(() => {
+                        isLongPressing = true;
+                        tooltip.classList.add('mobile-active');
+                        if (navigator.vibrate) navigator.vibrate(30);
+                    }, 300);
+                }, { passive: true });
+
+                navItem.addEventListener('touchend', (e) => {
+                    clearTimeout(touchTimer);
+                    if (isLongPressing) {
+                        e.preventDefault();
+                        tooltip.classList.remove('mobile-active');
+                    }
+                });
+
+                navItem.addEventListener('touchmove', () => {
+                    clearTimeout(touchTimer);
+                    tooltip.classList.remove('mobile-active');
+                }, { passive: true });
+            });
+
+            document.querySelectorAll('.project-card').forEach(card => {
+
+                // Helper to populate status tooltip for any project card
+                function setupCardTooltip() {
+                    const statusType = card.dataset.statusType || (card.dataset.available === "true" ? 'live' : 'private');
+                    const customLabel = card.dataset.statusLabel;
+                    const config = statusConfig[statusType] || (card.dataset.available === "true" ? statusConfig.live : statusConfig.private);
+
+                    tooltipIcon.innerHTML = config.icon;
+                    tooltipText.textContent = customLabel || config.defaultText;
+                }
+
+                card.addEventListener('touchstart', (e) => {
+                    isLongPressing = false;
+                    const touch = e.touches[0];
+
+                    touchTimer = setTimeout(() => {
+                        isLongPressing = true;
+                        setupCardTooltip();
+
+                        hoverTooltip.style.left = `${touch.clientX}px`;
+                        hoverTooltip.style.top = `${touch.clientY - 40}px`;
+                        hoverTooltip.classList.remove('hidden');
+
+                        if (navigator.vibrate) navigator.vibrate(30);
+                    }, 300);
+                }, { passive: true });
+
+                card.addEventListener('touchend', (e) => {
+                    clearTimeout(touchTimer);
+                    if (isLongPressing) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        hoverTooltip.classList.add('hidden');
+                    }
+                });
+
+                card.addEventListener('touchmove', () => {
+                    clearTimeout(touchTimer);
+                    hoverTooltip.classList.add('hidden');
+                }, { passive: true });
+
+                card.addEventListener('mousemove', (e) => {
+                    if (window.matchMedia('(hover: hover)').matches) {
+                        hoverTooltip.style.left = `${e.clientX + 14}px`;
+                        hoverTooltip.style.top = `${e.clientY + 14}px`;
+                    }
+                });
+
+                card.addEventListener('mouseenter', () => {
+                    if (window.matchMedia('(hover: hover)').matches) {
+                        setupCardTooltip();
+                        hoverTooltip.classList.remove('hidden');
+                    }
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    if (window.matchMedia('(hover: hover)').matches) {
+                        hoverTooltip.classList.add('hidden');
+                    }
+                });
+            });
+
+            // Project Details Modal System
+            const modal = document.getElementById('projectModal');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            const actionToast = document.getElementById('actionToast');
+
+            const modalImg = document.getElementById('modalImg');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalTag = document.getElementById('modalTag');
+            const modalStack = document.getElementById('modalStack');
+            const modalRole = document.getElementById('modalRole');
+            const modalStatusIcon = document.getElementById('modalStatusIcon');
+            const modalStatusLabel = document.getElementById('modalStatusLabel');
+
+            const btnGithub = document.getElementById('btnGithub');
+            const btnLive = document.getElementById('btnLive');
+            const btnCaseStudy = document.getElementById('btnCaseStudy');
+
+            // Dynamic Auto-Pagination Elements
+            const dynamicPageTarget = document.getElementById('dynamicPageTarget');
+            const paginationBar = document.getElementById('paginationBar');
+            const dotPagination = document.getElementById('dotPagination');
+            const prevStepBtn = document.getElementById('prevStepBtn');
+            const nextStepBtn = document.getElementById('nextStepBtn');
+
+            let activePageIndex = 0;
+            let pageElements = [];
+
+            function renderPaginationDots() {
+                dotPagination.innerHTML = '';
+                pageElements.forEach((_, idx) => {
+                    const dot = document.createElement('button');
+                    dot.className = `dot-circle ${idx === activePageIndex ? 'active' : ''}`;
+                    dot.addEventListener('click', () => switchPage(idx));
+                    dotPagination.appendChild(dot);
+                });
+
+                prevStepBtn.disabled = activePageIndex === 0;
+                nextStepBtn.disabled = activePageIndex === pageElements.length - 1;
+
+                prevStepBtn.classList.toggle('opacity-30', activePageIndex === 0);
+                nextStepBtn.classList.toggle('opacity-30', activePageIndex === pageElements.length - 1);
+            }
+
+            function switchPage(idx) {
+                if (idx < 0 || idx >= pageElements.length) return;
+                activePageIndex = idx;
+
+                pageElements.forEach((el, i) => {
+                    el.classList.toggle('hidden', i !== activePageIndex);
+                });
+
+                renderPaginationDots();
+            }
+
+            prevStepBtn.addEventListener('click', () => switchPage(activePageIndex - 1));
+            nextStepBtn.addEventListener('click', () => switchPage(activePageIndex + 1));
+
+            function showToast(msg, type = 'info') {
+                const actionToast = document.getElementById('actionToast');
+                const toastIcon = document.getElementById('toastIcon');
+                const toastMessage = document.getElementById('toastMessage');
+
+                if (!actionToast) return;
+
+                // Set message text
+                toastMessage.textContent = msg;
+
+                // Configure icon styling based on status type
+                if (type === 'success') {
+                    toastIcon.className = 'flex items-center justify-center w-5 h-5 rounded-lg text-[0.65rem] shrink-0 bg-emerald-500/20 text-emerald-400 dark:text-emerald-600';
+                    toastIcon.innerHTML = '<i class="lni lni-checkmark"></i>';
+                } else if (type === 'error') {
+                    toastIcon.className = 'flex items-center justify-center w-5 h-5 rounded-lg text-[0.65rem] shrink-0 bg-rose-500/20 text-rose-400 dark:text-rose-600';
+                    toastIcon.innerHTML = '<i class="lni lni-close"></i>';
+                } else {
+                    toastIcon.className = 'flex items-center justify-center w-5 h-5 rounded-lg text-[0.65rem] shrink-0 bg-amber-500/20 text-amber-400 dark:text-amber-600';
+                    toastIcon.innerHTML = '<i class="lni lni-information"></i>';
+                }
+
+                // Display Toast with Animation
+                actionToast.classList.remove('hidden');
+                requestAnimationFrame(() => {
+                    actionToast.classList.remove('translate-y-2', 'opacity-0');
+                    actionToast.classList.add('flex', 'translate-y-0', 'opacity-100');
+                });
+
+                // Auto-hide after 3.5 seconds
+                clearTimeout(window.toastTimer);
+                window.toastTimer = setTimeout(() => {
+                    actionToast.classList.remove('translate-y-0', 'opacity-100');
+                    actionToast.classList.add('translate-y-2', 'opacity-0');
+                    setTimeout(() => {
+                        actionToast.classList.add('hidden');
+                        actionToast.classList.remove('flex');
+                    }, 300);
+                }, 3500);
+            }
+
+            // Dynamic Atomic Group Pagination Engine
+            function setupDynamicContentPages(data) {
+                dynamicPageTarget.innerHTML = '';
+                pageElements = [];
+                activePageIndex = 0;
+
+                const rawSections = [];
+
+                if (data.description) {
+                    rawSections.push({ title: 'Overview', type: 'text', text: data.description });
+                }
+
+                if (data.problem) {
+                    rawSections.push({ title: 'Problem & Solution', type: 'text', text: data.problem });
+                }
+
+                if (data.features) {
+                    const featItems = data.features.split(',').map(f => f.trim()).filter(f => f.length > 0);
+                    rawSections.push({ title: 'Key Features', type: 'list', items: featItems });
+                }
+
+                const isMobileView = window.innerWidth < 768;
+
+                if (isMobileView) {
+                    paginationBar.classList.add('hidden');
+                    paginationBar.classList.remove('flex');
+
+                    rawSections.forEach((sec) => {
+                        const secBlock = document.createElement('div');
+                        secBlock.className = 'space-y-1 py-1';
+                        secBlock.innerHTML = `<h4 class="text-[0.65rem] tracking-widest uppercase font-semibold text-gray-400 mb-1">${sec.title}</h4>`;
+
+                        if (sec.type === 'list') {
+                            const ul = document.createElement('ul');
+                            ul.className = 'space-y-1 text-xs text-gray-600 dark:text-gray-300';
+                            sec.items.forEach(item => {
+                                const li = document.createElement('li');
+                                li.className = 'flex items-start gap-1.5';
+                                li.innerHTML = `<span class="text-gray-400">•</span> <span>${item}</span>`;
+                                ul.appendChild(li);
+                            });
+                            secBlock.appendChild(ul);
+                        } else {
+                            const p = document.createElement('p');
+                            p.className = 'text-xs text-gray-600 dark:text-gray-300 leading-relaxed';
+                            p.textContent = sec.text;
+                            secBlock.appendChild(p);
+                        }
+                        dynamicPageTarget.appendChild(secBlock);
+                    });
+                    return;
+                }
+
+                function createPageContainer(isHidden = false) {
+                    const page = document.createElement('div');
+                    page.className = `space-y-4 text-left h-full no-scrollbar overflow-hidden ${isHidden ? 'hidden' : ''}`;
+                    dynamicPageTarget.appendChild(page);
+                    pageElements.push(page);
+                    return page;
+                }
+
+                let currentPage = createPageContainer(false);
+                const maxPageHeight = dynamicPageTarget.clientHeight || 230;
+
+                rawSections.forEach((sec) => {
+                    const secBlock = document.createElement('div');
+                    secBlock.className = 'space-y-1 py-1';
+                    secBlock.innerHTML = `<h4 class="text-[0.65rem] tracking-widest uppercase font-semibold text-gray-400 mb-1">${sec.title}</h4>`;
+
+                    if (sec.type === 'list') {
+                        const ul = document.createElement('ul');
+                        ul.className = 'space-y-1 text-xs text-gray-600 dark:text-gray-300';
+                        sec.items.forEach(item => {
+                            const li = document.createElement('li');
+                            li.className = 'flex items-start gap-1.5';
+                            li.innerHTML = `<span class="text-gray-400">•</span> <span>${item}</span>`;
+                            ul.appendChild(li);
+                        });
+                        secBlock.appendChild(ul);
+                    } else {
+                        const p = document.createElement('p');
+                        p.className = 'text-xs text-gray-600 dark:text-gray-300 leading-relaxed';
+                        p.textContent = sec.text;
+                        secBlock.appendChild(p);
+                    }
+
+                    // Append to current page to test real geometric height
+                    currentPage.appendChild(secBlock);
+
+                    // If adding this entire block pushes page past max height, move title + content together to a new page
+                    if (currentPage.children.length > 1 && currentPage.scrollHeight > maxPageHeight) {
+                        currentPage.removeChild(secBlock);
+                        currentPage = createPageContainer(true);
+                        currentPage.appendChild(secBlock);
+                    }
+                });
+
+                if (pageElements.length > 1) {
+                    paginationBar.classList.remove('hidden');
+                    paginationBar.classList.add('flex');
+                    switchPage(0);
+                } else {
+                    paginationBar.classList.add('hidden');
+                    paginationBar.classList.remove('flex');
+                }
+            }
+
+            function openModal(data) {
+                document.body.classList.add('modal-active-body');
+
+                modalImg.src = data.img || 'images/m1.jpg';
+                modalTitle.textContent = data.title;
+                modalTag.textContent = data.tag;
+                modalRole.textContent = data.role || 'Developer';
+
+                // Status Tag
+                const statusType = data.statusType || 'live';
+                const config = statusConfig[statusType] || statusConfig.live;
+                modalStatusIcon.innerHTML = config.icon;
+                modalStatusLabel.textContent = data.statusLabel || config.defaultText;
+
+                // Stack Badges
+                modalStack.innerHTML = '';
+                const stackList = data.stack ? data.stack.split(',') : ['HTML', 'CSS', 'JS'];
+                stackList.forEach(tech => {
+                    const span = document.createElement('span');
+                    span.className = 'px-2 py-0.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 text-[0.6rem] rounded-md font-medium';
+                    span.textContent = tech.trim();
+                    modalStack.appendChild(span);
+                });
+
+                // Configure Action Buttons
+                configureButton(btnGithub, data.github, 'Currently in development');
+                configureButton(btnLive, data.live, 'Live preview is not available yet');
+                configureButton(btnCaseStudy, data.casestudy, 'Case study is not available yet');
+
+                // Reveal Modal First so DOM height calculations are exact
+                modal.classList.remove('modal-closed');
+                modal.classList.add('modal-open');
+
+                // Run smart atomic placement logic
+                setupDynamicContentPages(data);
+            }
+
+            function configureButton(btn, url, fallbackMsg) {
+                if (url && url.trim() !== '') {
+                    btn.href = url;
+                    btn.onclick = null;
+                    btn.classList.remove('btn-disabled');
+                } else {
+                    btn.href = '#';
+                    btn.onclick = (e) => {
+                        e.preventDefault();
+                        showToast(fallbackMsg);
+                    };
+                    btn.classList.add('btn-disabled');
+                }
+            }
+
+            function closeModal() {
+                modal.classList.remove('modal-open');
+                modal.classList.add('modal-closed');
+                setTimeout(() => {
+                    document.body.classList.remove('modal-active-body');
+                }, 250);
+            }
+
+            closeModalBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModal();
+            });
+
+            document.querySelectorAll('.project-card').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    if (isLongPressing) return;
+                    e.preventDefault();
+                    hoverTooltip.classList.add('hidden');
+                    const dataset = card.dataset;
+                    openModal(dataset);
+                });
+            });
+
+            // Intersection Observer
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        if (entry.target.classList.contains('scroll-hidden')) entry.target.classList.add('scroll-visible');
+                        if (entry.target.classList.contains('scroll-hidden-left')) entry.target.classList.add('scroll-visible-x');
+                        if (entry.target.classList.contains('scroll-hidden-right')) entry.target.classList.add('scroll-visible-x');
+                        entry.target.querySelectorAll('.counter').forEach(animateCounter);
+                    }
+                });
+            }, { threshold: 0.15 });
+
+            document.querySelectorAll('.scroll-hidden, .scroll-hidden-left, .scroll-hidden-right').forEach(el => observer.observe(el));
+
+            function animateCounter(el) {
+                if (el.dataset.animated) return;
+                el.dataset.animated = "true";
+                const target = parseInt(el.dataset.target, 10);
+                let current = 0;
+                const increment = target / 40;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    el.textContent = Math.floor(current) + '+';
+                }, 25);
+            }
+
+            // Scroll Active Navigation
+            const navItems = document.querySelectorAll('.nav-item[data-section]');
+            const sections = document.querySelectorAll('section');
+
+            window.addEventListener('scroll', () => {
+                let current = "";
+                const scrollPos = window.pageYOffset;
+                sections.forEach(section => {
+                    if (scrollPos >= section.offsetTop - 300) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                navItems.forEach(item => {
+                    item.classList.toggle('nav-active', item.dataset.section === current);
+                });
+            }, { passive: true });
+
+            // Form Handler - Integrated with Web3Forms
+            document.getElementById('contactForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const form = e.target;
+                const btn = form.querySelector('button');
+
+                btn.textContent = 'Sending...';
+                btn.disabled = true;
+
+                const formData = new FormData(form);
+
+                try {
+                    const response = await fetch('https://api.web3forms.com/submit', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok && data.success) {
+                        btn.textContent = 'Send Message';
+                        btn.disabled = false;
+                        form.reset();
+                        showToast('Message sent successfully! I will get back to you soon.', 'success');
+                    } else {
+                        btn.textContent = 'Send Message';
+                        btn.disabled = false;
+                        showToast(data.message || 'Error sending message. Please try again.', 'error');
+                    }
+                } catch (error) {
+                    btn.textContent = 'Send Message';
+                    btn.disabled = false;
+                    showToast('Network error. Please check your connection and try again.', 'error');
+                }
+            });
+            // Smooth Scroll
+            document.addEventListener('click', (e) => {
+                const trigger = e.target.closest('a[href^="#"], [data-target^="#"]');
+                if (!trigger) return;
+
+                const targetId = trigger.getAttribute('href') || trigger.getAttribute('data-target');
+                if (!targetId || targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    e.preventDefault();
+                    const targetPos = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                    const startPos = window.pageYOffset;
+                    const distance = targetPos - startPos;
+                    const duration = 700;
+                    let start = null;
+
+                    function step(timestamp) {
+                        if (!start) start = timestamp;
+                        const progress = timestamp - start;
+                        const ease = progress / (duration / 2) < 1
+                            ? 4 * Math.pow(progress / duration, 3)
+                            : 1 - Math.pow(-2 * progress / duration + 2, 3) / 2;
+
+                        window.scrollTo(0, startPos + distance * ease);
+
+                        if (progress < duration) {
+                            window.requestAnimationFrame(step);
+                        } else {
+                            window.scrollTo(0, targetPos);
+                        }
+                    }
+                    window.requestAnimationFrame(step);
+                }
+            });
+
+            // Protection Rules
+            document.addEventListener('contextmenu', e => e.preventDefault());
+            document.addEventListener('selectstart', e => e.preventDefault());
+            document.addEventListener('copy', e => e.preventDefault());
+
+            document.addEventListener('keydown', (e) => {
+                if (
+                    e.key === 'F12' ||
+                    (e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(e.key.toUpperCase())) ||
+                    (e.ctrlKey && e.key.toLowerCase() === 'u')
+                ) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
